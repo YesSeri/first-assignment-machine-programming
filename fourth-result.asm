@@ -1,9 +1,9 @@
 .ORIG x3d00
-    ADD R0, R3, xD
-    ADD R1, R3, x2
-    ;; LEA R0, MSG-INPUT
-    ;; PUTS
-    ;; JSR readS
+    ;; ADD R0, R3, xD
+    ;; ADD R1, R3, x2
+    LEA R0, MSG-INPUT
+    PUTS
+    JSR readS
     JSR isPrime
     JSR resultS
     HALT
@@ -80,9 +80,9 @@ SKIP
     RET
 
 ;;; MESSAGES
-MSG-INPUT .STRINGZ "Input a 2 digit decimal number:"
-MSG-IS-PRIME .STRINGZ "The number is prime"
-MSG-IS-NOT-PRIME .STRINGZ "The number is not prime"
+MSG-INPUT           .STRINGZ "Input a 2 digit decimal number:"
+MSG-IS-PRIME        .STRINGZ "The number is prime.\n"
+MSG-IS-NOT-PRIME    .STRINGZ "The number is not prime.\n"
 
 RETURNADDRESS   .BLKW 1
 SAVE2REG1       .BLKW 1

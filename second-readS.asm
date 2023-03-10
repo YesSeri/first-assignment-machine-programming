@@ -1,6 +1,6 @@
 .ORIG x3000
-    AND R3, R3, R0
-    ADD R3, R3, xf
+    ;; AND R3, R3, R0
+    ;; ADD R3, R3, xf
     LEA R0, MSG
     PUTSP
     JSR readS
