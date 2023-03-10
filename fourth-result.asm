@@ -1,12 +1,13 @@
 .ORIG x3d00
-    ;; ADD R0, R3, xD
-    ;; ADD R1, R3, x2
-    LEA R0, MSG
-    PUTSP
-    JSR readS
+    ADD R0, R3, xD
+    ADD R1, R3, x2
+    ;; LEA R0, MSG-INPUT
+    ;; PUTS
+    ;; JSR readS
     JSR isPrime
+    JSR resultS
     HALT
-    
+
     ;; Checks if number is prime
     ;; If number is prime R0 is set to 1, else 0
 isPrime
@@ -19,15 +20,15 @@ isPrime
     ST R7, RETURNADDRESS ;; We need to save return address because we overwrite it in our call to JSR divide
 
     ;; We remove 2 to check if number is two. If it is two we return that it is prime.
-    ADD R1, R0, x-2 
-    BRz PRM
-    
+    ADD R1, R0, x-2
+    BRz PRIME
+
     ;; If positive we know it is not a prime unless it is 2, which we have already tested for.
     AND R1, R0, x1
-    BRz NOTPRM
-    
+    BRz NOTPRIME
+
     ;; We have an odd number larger than 2. We now need to check if it is prime.
-    ;; We know R1 is x1 from AND statment few lines before. 
+    ;; We know R1 is x1 from AND statment few lines before.
     ;; We will loop for all odd numbers from 3 upto our prime number to test in R0, and see if they ever are evenly divisible.
     ;; If they are not evenly divisible we have a prime number.
     ;; We start at x3, so we add x2 to R1
@@ -37,7 +38,7 @@ isPrime
     ;; This saves us one operation per loop lap. Else we would need to calculate the inverse by first using NOT on R1, and then ADD R1, R1, x1.
 ODD ADD R2, R2, x-2
     ADD R3, R0, R2
-    BRz PRM
+    BRz PRIME
     ADD R1, R1, x2
 
     ;; We divide R0, with R1
@@ -50,7 +51,7 @@ ODD ADD R2, R2, x-2
 
 NOTPRIME
     AND R0, R0, x0
-    BRnpz RESTOREREG
+    BRnzp RESTOREREG
 PRIME
     AND R0, R0, x0
     ADD R0, R0, x1
@@ -63,7 +64,26 @@ RESTOREREG
     LD R7, RETURNADDRESS
     RET
 
-MSG .STRINGZ "Input a 2 digit decimal number:"
+    ;; Write a function called “resultS” that takes as argument a value stored in R0. If the value in
+    ;; R0 is not zero then the function should display on the console the message: “The number is
+    ;; prime” else it should display the message “The number is not prime”.
+resultS
+    NOT R0, R0
+    NOT R0, R0
+    BRz SKIP
+    LEA R0, MSG-IS-PRIME
+    PUTS
+    RET
+SKIP
+    LEA R0, MSG-IS-NOT-PRIME
+    PUTS
+    RET
+
+;;; MESSAGES
+MSG-INPUT .STRINGZ "Input a 2 digit decimal number:"
+MSG-IS-PRIME .STRINGZ "The number is prime"
+MSG-IS-NOT-PRIME .STRINGZ "The number is not prime"
+
 RETURNADDRESS   .BLKW 1
 SAVE2REG1       .BLKW 1
 SAVE2REG2       .BLKW 1
@@ -76,11 +96,11 @@ SAVE2REG5       .BLKW 1
 
 ;; Puts result in R4 and quotient in R5
 ;; Input is R0, number to divide and R1, divisor
-divide  
+divide
         ST R0, SAVEREG1 ;; save registers we will use.
         ST R1, SAVEREG2
         ST R2, SAVEREG3
-        
+
         AND R4, R4, x0
         NOT R2, R1
         ADD R2, R2, x1
@@ -90,7 +110,7 @@ SUB     ADD R4, R4, x1
         ADD R4, R4, x-1
         AND R5, R5, x0
         ADD R5, R0, R1
-        
+
         LD R0, SAVEREG1 ;; restore registers we used.
         LD R1, SAVEREG2
         LD R2, SAVEREG3
@@ -120,7 +140,7 @@ LOP ADD R2, R2, R1 ;; Multiply 10 value by 5, then double to turn 2 -> 20, 3 -> 
     LD R2, SAVEREG2
     LD R3, SAVEREG3
     RET
-    
+
 SAVEREG1    .BLKW 1
 SAVEREG2    .BLKW 1
 SAVEREG3    .BLKW 1
