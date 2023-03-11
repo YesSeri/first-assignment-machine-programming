@@ -84,7 +84,6 @@ MSG-INPUT           .STRINGZ "Input a 2 digit decimal number:"
 MSG-IS-PRIME        .STRINGZ "The number is prime.\n"
 MSG-IS-NOT-PRIME    .STRINGZ "The number is not prime.\n"
 
-
 RETURNADDRESS   .BLKW 1
 SAVE2REG1       .BLKW 1
 SAVE2REG2       .BLKW 1
@@ -121,30 +120,25 @@ readS
     ST R1, SAVEREG1 ;; save all the registers we use.
     ST R2, SAVEREG2
     ST R3, SAVEREG3
-    ST R4, SAVEREG4
+
     AND R2, R2, x0
-    ADD R3, R2, x5 ;; we use r3, to loop 5 times in LOP
+    LD R2, CVT
+
     GETC
     OUT
     ADD R1, R2, R0
     GETC
     OUT
+    ADD R3, R2, R0
     
     ;Save R0 in R4 to output new line char
-    AND R4, R4, x0
-    ADD R4, R0, x0
-    LD R0, ENDLINE
-    PUTC
-    AND R0, R0, x0
-    ADD R0, R4, x0
-    ;Number is back in R0
+    AND R0, R0, x0 
+    ADD R0, R0, xA ;; Newline character
+    PUTC ;; Print newline
     
-    LD R2, CVT
-    ADD R0, R0, R2
-	ADD R1, R1, R2
+    ADD R0, R3, x0
 	AND R2, R2, x0
-
-
+    ADD R3, R2, x5 ;; we use r3, to loop 5 times in LOP
 LOP ADD R2, R2, R1 ;; Multiply 10 value by 5, then double to turn 2 -> 20, 3 -> 30 usw
     ADD R3, R3, x-1
     BRp LOP
@@ -153,15 +147,11 @@ LOP ADD R2, R2, R1 ;; Multiply 10 value by 5, then double to turn 2 -> 20, 3 -> 
     LD R1, SAVEREG1 ;; restore registers we used.
     LD R2, SAVEREG2
     LD R3, SAVEREG3
-    LD R3, SAVEREG4
     RET
 
 SAVEREG1    .BLKW 1
 SAVEREG2    .BLKW 1
 SAVEREG3    .BLKW 1
-SAVEREG4    .BLKW 1
 
 CVT .FILL #-48
-ENDLINE .FILL #10
-
     .END
