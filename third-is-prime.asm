@@ -20,14 +20,14 @@ isPrime
 
     ;; We remove 2 to check if number is two. If it is two we return that it is prime.
     ADD R1, R0, x-2 
-    BRz PRM
-    
+    BRz PRIME
+
     ;; If positive we know it is not a prime unless it is 2, which we have already tested for.
     AND R1, R0, x1
-    BRz NOTPRM
-    
+    BRz NOTPRIME
+
     ;; We have an odd number larger than 2. We now need to check if it is prime.
-    ;; We know R1 is x1 from AND statment few lines before. 
+    ;; We know R1 is x1 from AND statment few lines before.
     ;; We will loop for all odd numbers from 3 upto our prime number to test in R0, and see if they ever are evenly divisible.
     ;; If they are not evenly divisible we have a prime number.
     ;; We start at x3, so we add x2 to R1
@@ -37,7 +37,7 @@ isPrime
     ;; This saves us one operation per loop lap. Else we would need to calculate the inverse by first using NOT on R1, and then ADD R1, R1, x1.
 ODD ADD R2, R2, x-2
     ADD R3, R0, R2
-    BRz PRM
+    BRz PRIME
     ADD R1, R1, x2
 
     ;; We divide R0, with R1
@@ -50,7 +50,7 @@ ODD ADD R2, R2, x-2
 
 NOTPRIME
     AND R0, R0, x0
-    BRnpz RESTOREREG
+    BRnzp RESTOREREG
 PRIME
     AND R0, R0, x0
     ADD R0, R0, x1
