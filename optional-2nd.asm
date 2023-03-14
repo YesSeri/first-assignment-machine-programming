@@ -1,7 +1,7 @@
 .ORIG x3d00
 LEA R0, MSG-WELCOME
 PUTS
-LOOP 
+LOOP
 	LEA R0, MSG-INPUT
     PUTS
     JSR readS
@@ -9,8 +9,8 @@ LOOP
     JSR resultS
     JSR LOOP
 	HALT
-MSG-INPUT   .STRINGZ "Input a decimal number with 1-5 digits and finish with enter:\n>"
-MSG-WELCOME .STRINGZ "WELCOME TO PRIME CALCULATOR DELUXE. \nIT CAN'T CALCULATE PRIMES, BUT IT CAN TELL YOU IF A NUMBER IS A PRIME\n(as long as it is less than 30.000)\n\n"
+MSG-INPUT   .STRINGZ "Input a decimal number with 1-5 digits and finish with enter\n> "
+MSG-WELCOME .STRINGZ "\n=======================================================\nWELCOME TO PRIME CALCULATOR DELUXE. \nIT CAN'T CALCULATE PRIMES,\nBUT IT CAN TELL YOU IF A NUMBER IS A PRIME\n(as long as it is less than 30.000)\n=======================================================\n\n"
 .END
 
 .ORIG x4000
@@ -87,8 +87,8 @@ SKIP
 
 ;;; MESSAGES
 
-MSG-IS-PRIME        .STRINGZ "The number is prime.\n"
-MSG-IS-NOT-PRIME    .STRINGZ "The number is not prime.\n"
+MSG-IS-PRIME        .STRINGZ "The number is prime.\n\n"
+MSG-IS-NOT-PRIME    .STRINGZ "The number is not prime.\n\n"
 
 RETURNADDRESS   .BLKW 1
 SAVE2REG1       .BLKW 1
@@ -121,7 +121,6 @@ SUB     ADD R4, R4, x1
 ;; Recieves two digit number and saves it to R0
 
 readS
-    
     ST R1, SAVEREG1 ;; save registers we will use.
     ST R2, SAVEREG2
     ST R3, SAVEREG3
@@ -143,10 +142,12 @@ GETNUM
     BRz LEAVE
     OUT
     ADD R0, R0, R4  ; Convert ascii to numeric
+	JSR checkNumber
     STR R0, R5, x0  ; Store digit
     ADD R5, R5, x1  ; Move pointer to DIGITS one.
     ADD R1, R1, x-1 
-    BRp GETNUM
+    BRn errorToManyDigits
+    BRnzp GETNUM
 LEAVE
     ;; Print a newline
     LD R0, NEWLINE
@@ -163,7 +164,7 @@ FOR-EACH-DIGIT
     ADD R2, R1, x-1
 FOR-SIZE-OF-DIGIT
     BRnz LEAVE-INNER-DIGIT-LOOP
-    JSR MULTIPLY-BY-TEN
+    JSR multiplyByTen
     ADD R2, R2, x-1
     BRnzp FOR-SIZE-OF-DIGIT
 LEAVE-INNER-DIGIT-LOOP
@@ -180,8 +181,39 @@ LEAVE-INNER-DIGIT-LOOP
     LD R7, SAVEREG7
     RET
 
+errorToManyDigits
+    LEA R0, ERROR-MSG-TO-MANY-DIGITS
+    PUTS
+    JSR errorHandling
+    HALT
+    
+errorIllegalInput
+    LEA R0, ERROR-MSG-ILLEGAL-INPUT
+    PUTS
+    JSR errorHandling
+    HALT
+    
+errorHandling
+    LD R0, RESTART
+    JMP R0
+;; Checks that R0 is digit 0 to 9
+RESTART .FILL LOOP
+checkNumber 
+    ST R1, REG1SAVE
+    AND R1, R1, x0
+    
+	ADD R1, R0, x-9
+	BRp ERROR ;; To big number, n > 9
+	
+	NOT R0, R0
+	NOT R0, R0
+	BRn ERROR ;; To small number, n < 0
+	
+	LD R1, REG1SAVE
+	RET
+	ERROR JSR errorIllegalInput
 
-MULTIPLY-BY-TEN ; Multiplies R3 by ten
+multiplyByTen ; Multiplies R3 by ten
     ST R1, REG1SAVE
     ADD R1, R3, R3
     ADD R1, R1, R3
@@ -192,15 +224,21 @@ MULTIPLY-BY-TEN ; Multiplies R3 by ten
     RET
 
 
+
 SAVEREG1        .BLKW 1
 SAVEREG2        .BLKW 1
 SAVEREG3        .BLKW 1
 SAVEREG4        .BLKW 1
 SAVEREG5        .BLKW 1
 SAVEREG7        .BLKW 1
-DIGITS .BLKW 5
-ASCII-TO-NUM    .FILL #-48
+DIGITS          .BLKW 5
 REG1SAVE        .BLKW 1
+REG2SAVE        .BLKW 1
+REG3SAVE        .BLKW 1
+
+ASCII-TO-NUM    .FILL #-48
 NEWLINE         .FILL xA
 
+ERROR-MSG-TO-MANY-DIGITS .STRINGZ "\n\nERROR: Max digits exceeded.\nREASON: Five digits is maximum amount allowed.\nERROR HANDLING: Program restarts\n\n"
+ERROR-MSG-ILLEGAL-INPUT  .STRINGZ "\n\nERROR: Illegal input.\nREASON: You entered a character that was not a number.\nERROR HANDLING: Program restarts\n\n"
 .END
