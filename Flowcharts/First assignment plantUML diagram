@@ -1,0 +1,15 @@
+@startuml
+
+:R0 <-- M[A]\nR1 <-- M[B];
+
+repeat:R2 = !R0\nR2 = R2 + 1\nR2 = R2 + R1;
+
+
+backward:R1 <-- R1 + (-1)
+    R0 <-- R0 + 1;
+repeat while (**R2 ?= 0 || R2 ?= Negative**
+    (Is R2 zero or negative?)) is (No)
+-> Yes;
+: M[C] <-- R1;
+
+@enduml
