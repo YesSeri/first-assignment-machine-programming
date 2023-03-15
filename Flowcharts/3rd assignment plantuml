@@ -34,7 +34,7 @@ RET;
 (Same as 2nd assignement);
 :JSR isPrime;
 
-rectangle "                    isPrime" {
+rectangle "                        isPrime" {
 
 :SAVE2REG1 <-- R1
 SAVE2REG2 <-- R2
@@ -46,11 +46,13 @@ RETURNADDRESS <-- R7;
 :R1 <-- R0 + (-2);
 
 if (R1 ?= 0) then (Yes)
-:**PRIME**
-R0 <-- R0 && 0
+rectangle "                    PRIME" {
+:R0 <-- R0 && 0
 R0 <-- R0 + 1;
-:**RESTOREREG**
-R1 <-- SAVE2REG1
+}
+rectangle "                           RESTOREREG" {
+
+:R1 <-- SAVE2REG1
 R2 <-- SAVE2REG2
 R3 <-- SAVE2REG3
 R4 <-- SAVE2REG4
@@ -59,13 +61,16 @@ R7 <-- RETURNADDRESS
 RET;
 :HALT;
 stop
+}
 
 else (No)
 :R1 <-- R0 + 1;
 endif
 if (R1 ?= 0) then (Yes)
-:**NOTPRIME**
-R0 <-- R0 && 0;
+rectangle "                    NOTPRIME" {
+
+:R0 <-- R0 && 0;
+}
 :**RESTOREREG**;
 :HALT;
 stop
@@ -73,7 +78,9 @@ else (No)
 :R2 <-- R2 && 0
 R2 <-- R2 + (-1);
 endif
-:      **ODD**\nR2 <-- R2 + (-2)\nR3 <-- R0 + R2;
+rectangle "                    ODD" {
+
+:R2 <-- R2 + (-2)\nR3 <-- R0 + R2;
 if (R3 ?= 0) then (Yes)
 :**PRIME**;
 :**RESTOREREG**;
@@ -91,7 +98,9 @@ SAVEREG3 <-- R2
 R4 <-- R4 && 0
 R2 <-- !R1
 R2 <-- R2 + 1;
-repeat:       **SUB**\nR4 <-- R4 + 1\nR0 <-- R0 + R2;
+rectangle "                    SUB" {
+
+repeat:R4 <-- R4 + 1\nR0 <-- R0 + R2;
 repeat while (R0 ?= 0 || R0 ?= Positive) is (Yes)
 -> No;
 :R4 <-- R4 + (-1)
@@ -102,8 +111,10 @@ R1 <-- SAVEREG2
 R2 <-- SAVEREG3
 RET;
 }
+}
 :R5 <-- !R5
 R5 <-- !R5;
+}
 if (R5 ?= Postive || R5 ?= Negative) then (Yes)
 :**ODD**;
 stop
