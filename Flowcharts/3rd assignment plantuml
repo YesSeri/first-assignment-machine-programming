@@ -1,10 +1,10 @@
 @startuml
 
 :R0 <-- MSG ("Input a 2 digit decimal number: "
-    PUTSP
-    JSR readS;
+PUTSP
+JSR readS;
 
-rectangle "                 readS" {
+/'rectangle "                 readS" {
 :M[SAVEREG1] <-- R1
 M[SAVEREG2] <-- R2
 M[SAVEREG3] <-- R3
@@ -27,11 +27,13 @@ R1 <-- SAVEREG1
 R2 <-- SAVEREG2
 R3 <-- SAVEREG3
 RET;
-}
+}'/
 
+:                **readS**
+(Same as 2nd assignement);
 :JSR isPrime;
 
-rectangle "                 isPrime" {
+rectangle "                    isPrime" {
 
 :SAVE2REG1 <-- R1
 SAVE2REG2 <-- R2
@@ -61,10 +63,14 @@ else (No)
 :R1 <-- R0 + 1;
 endif
 if (R1 ?= 0) then (Yes)
-:**notPrime**;
+:**notPrime**
+R0 <-- R0 && 0;
+:**RESTOREREG**;
+:HALT;
+stop
 else (No)
-:AND R2, R2, x0
-    ADD R2, R2, x-1;
+:R2 <-- R2 && 0
+R2 <-- R2 + (-1);
 endif
 
 }
