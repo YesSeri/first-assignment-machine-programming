@@ -17,7 +17,7 @@ Group  members:
 
 - Henrik Zenkert
 
-- XXX YYY
+- Jakob Hansen
 
 - XXX YYY
 
