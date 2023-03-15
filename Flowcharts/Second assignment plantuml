@@ -1,0 +1,33 @@
+@startuml
+
+start
+
+:LEA R0 <-- MSG ("Input a 2 digit decimal number: ")\nPUTSP\nJSR readS;
+
+rectangle "readS" {
+:SAVEREG1 <-- R1
+SAVEREG2 <-- R2
+SAVEREG3 <-- R3
+R2 <-- R2 && 0
+R3 <-- R2 + 5
+IN (Recieve input from keyboard)
+R1 <--R2 + R0
+IN (Recieve input from keyboard)
+R2 <-- CVT (Convert to corresponding decimal value)
+R0 <-- R0 + R2
+R1 <-- R1 + R2
+R2 <-- R2 && 0;
+
+repeat:R2 <-- R2 + R1\nR3 <-- R3 + (-1);
+repeat while (R3 ?= 0) is (No)
+-> Yes;
+:R2 <-- R2 + R2
+R0 <-- R2 + R0
+RET;
+}
+
+:HALT;
+
+stop
+
+@enduml
