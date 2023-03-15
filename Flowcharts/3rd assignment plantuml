@@ -1,4 +1,5 @@
 @startuml
+start
 
 :R0 <-- MSG ("Input a 2 digit decimal number: "
 PUTSP
@@ -72,9 +73,7 @@ else (No)
 :R2 <-- R2 && 0
 R2 <-- R2 + (-1);
 endif
-:      **ODD**
-R2 <-- R2 + (-2)
-R3 <-- R0 + R2;
+:      **ODD**\nR2 <-- R2 + (-2)\nR3 <-- R0 + R2;
 if (R3 ?= 0) then (Yes)
 :**PRIME**;
 :**RESTOREREG**;
@@ -95,12 +94,28 @@ R2 <-- R2 + 1;
 repeat:       **SUB**\nR4 <-- R4 + 1\nR0 <-- R0 + R2;
 repeat while (R0 ?= 0 || R0 ?= Positive) is (Yes)
 -> No;
-:ADD R4, R4, x-1
-        AND R5, R5, x0
-        ADD R5, R0, R1;
-
-
+:R4 <-- R4 + (-1)
+R5 <-- R5 && 0
+R5 <-- R0 + R1
+R0 <-- SAVEREG1
+R1 <-- SAVEREG2
+R2 <-- SAVEREG3
+RET;
 }
+:R5 <-- !R5
+R5 <-- !R5;
+if (R5 ?= Postive || R5 ?= Negative) then (Yes)
+:**ODD**;
+stop
+else (No)
+:**NOTPRIME**;
+:**RESTOREREG**;
+:HALT;
+stop
+endif
+
+
+
 
 
 @enduml
