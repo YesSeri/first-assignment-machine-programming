@@ -2,18 +2,18 @@
 
 start
 
-:LEA R0 <-- MSG ("Input a 2 digit decimal number: ")\nPUTSP\nJSR readS;
+:LEA R0 <-- M[MSG] ("Input a 2 digit decimal number: ")\nPUTSP\nJSR readS;
 
 rectangle "readS" {
-:SAVEREG1 <-- R1
-SAVEREG2 <-- R2
-SAVEREG3 <-- R3
+:M[SAVEREG1] <-- R1
+M[SAVEREG2] <-- R2
+M[SAVEREG3] <-- R3
 R2 <-- R2 && 0
 R3 <-- R2 + 5
 IN (Recieve input from keyboard)
 R1 <--R2 + R0
 IN (Recieve input from keyboard)
-R2 <-- CVT (Convert to corresponding decimal value)
+R2 <-- M[CVT] (Convert to corresponding decimal value)
 R0 <-- R0 + R2
 R1 <-- R1 + R2
 R2 <-- R2 && 0;
