@@ -45,7 +45,7 @@ RETURNADDRESS <-- R7;
 :R1 <-- R0 + (-2);
 
 if (R1 ?= 0) then (Yes)
-:**Prime**
+:**PRIME**
 R0 <-- R0 && 0
 R0 <-- R0 + 1;
 :**RESTOREREG**
@@ -63,7 +63,7 @@ else (No)
 :R1 <-- R0 + 1;
 endif
 if (R1 ?= 0) then (Yes)
-:**notPrime**
+:**NOTPRIME**
 R0 <-- R0 && 0;
 :**RESTOREREG**;
 :HALT;
@@ -72,7 +72,29 @@ else (No)
 :R2 <-- R2 && 0
 R2 <-- R2 + (-1);
 endif
+:      **ODD**
+R2 <-- R2 + (-2)
+R3 <-- R0 + R2;
+if (R3 ?= 0) then (Yes)
+:**PRIME**;
+:**RESTOREREG**;
+:HALT;
+stop
+else (No)
+:R1 <-- R1 + 2
+JSR divide;
+endif
+
+rectangle "                    divide" {
+:SAVEREG1 <-- R0
+SAVEREG2 <-- R1
+SAVEREG3 <-- R2
+
+        AND R4, R4, x0
+        NOT R2, R1
+        ADD R2, R2, x1;
 
 }
+
 
 @enduml
