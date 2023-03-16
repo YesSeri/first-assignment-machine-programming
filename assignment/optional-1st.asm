@@ -39,6 +39,11 @@ isPrime                     ; The isPrime function begins
                             ; We know R1 is x1 from AND statment few lines before.
                             ; We will loop for all odd numbers from 3 up to our number to test in R0, and see if they ever are evenly divisible.
                             ; If they are not evenly divisible we have a prime number.
+
+
+
+
+
                             ; We start at x3, so we add x2 to R1
 
     AND R2, R2, x0          ; CLear R2
