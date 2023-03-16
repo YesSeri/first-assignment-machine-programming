@@ -32,7 +32,6 @@ We have done all the mandatory and optional assignments.
 
 Below we have attached flowcharts describing our solutions to the mandatory assignments. 
 
-We had diffi
 
 
 ### 1st - midpoint
