@@ -12,4 +12,4 @@ repeat while (**R2 ?= 0 || R2 ?= Negative**
 -> Yes;
 : M[C] <-- R1;
 
-@enduml
+@endum
