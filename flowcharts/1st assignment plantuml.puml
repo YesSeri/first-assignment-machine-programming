@@ -1,4 +1,5 @@
 @startuml
+start
 
 :R0 <-- M[A]\nR1 <-- M[B];
 
@@ -11,5 +12,6 @@ repeat while (**R2 ?= 0 || R2 ?= Negative**
     (Is R2 zero or negative?)) is (No)
 -> Yes;
 : M[C] <-- R1;
+stop
 
 @endum

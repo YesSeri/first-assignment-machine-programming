@@ -12,9 +12,10 @@ repeat:R0 <-- MSG-INPUT ("Input a 2 digit decimal number: ")\nPUTS\nJSR readS;
 :                      **isPrime**
 (Same as 3rd assignemnt flowchart);
 
-:JSR resultS
-(Same as 4th assignment flowchart;
-:**resultS**;
+:JSR resultS;
+
+:                    **resultS**
+(Same as 4th assignment flowchart;;
 repeat while (JSR BEG)
 }
 

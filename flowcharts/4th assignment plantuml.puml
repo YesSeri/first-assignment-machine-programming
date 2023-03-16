@@ -12,7 +12,7 @@ JSR readS;
 (Same as 3rd assignemnt flowchart);
 
 :JSR resultS;
-rectangle "                 resultS" {
+rectangle "                     resultS" {
 
 
 :R0 <-- !R0
