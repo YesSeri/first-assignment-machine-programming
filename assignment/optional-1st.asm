@@ -18,7 +18,7 @@ MSG-WELCOME .STRINGZ "WELCOME TO PRIME CALCULATOR DELUXE. \nIT CAN'T CALCULATE P
 .ORIG x4000
                             ; Checks if number is prime
                             ; If number is prime R0 is set to 1, else 0
-isPrime                     ; The isPrime function begins
+isPrime                     
 
     ST R1, SAVE2REG1        ; Store register R1
     ST R2, SAVE2REG2        ; Store register R2
@@ -28,15 +28,15 @@ isPrime                     ; The isPrime function begins
     ST R7, RETURNADDRESS    ; Store register R7 (We need to save return address because we overwrite it in our call to JSR divide)
 
                             ; Check if number is 2. If it is two we return that it is prime.
-    ADD R1, R0, x-2         ; Subtracts 1 from R1
+    ADD R1, R0, x-2         ; Subtracts 2 from R1
     BRz PRIME               ; Branch to PRIME if R1 is zero
 
                             ; Check if number is odd
     AND R1, R0, x1          ; Bitwise AND operation between input and "1"
     BRz NOTPRIME            ; Branch to NOTPRIME if AND operation is zero (input is an even number)
 
-                            ; We have an odd number larger than 2. We now need to check if it is prime.
-                            ; We know R1 is x1 from AND statement few lines before.
+                            ; We now have an odd number larger than 2. We now need to check if it is prime.
+                            ; We know R1 is x1 from previous AND statement
                             ; We will loop for all odd numbers from 3 up to our number to test in R0, and see if they ever are evenly divisible.
                             ; If they are not evenly divisible we have a prime number.
                             ; We start at x3, so we add x2 to R1
@@ -47,7 +47,8 @@ isPrime                     ; The isPrime function begins
                             ; R2 is the negative inverse of the counter that goes 3, 5, 7...
                             ; R2 goes -3, -5, -7... We use that to check when  we reach R0, the number we are testing for
 
-                            ; This saves us one operation per loop lap. Else we would need to calculate the inverse by first -
+                            ; This saves us one operation per loop lap.
+							; Else we would need to calculate the inverse by first 
                             ; using NOT on R1, and then ADD R1, R1, x1.
 
 ODD ADD R2, R2, x-2         ; Subtract 2 from R2
@@ -55,10 +56,10 @@ ODD ADD R2, R2, x-2         ; Subtract 2 from R2
     BRz PRIME               ; Branch to PRIME if zero
     ADD R1, R1, x2          ; Add 2 to R1
 
-                            ; We divide R0, with R1
+                            ; We divide R0, with R1, and quotient is saved in R4 and remainder in R5
     JSR DIVIDE              ; Call DIVIDE function
 
-    NOT R5, R5              ; We use NOT twice to check if number is positive or zero.
+    NOT R5, R5              
     NOT R5, R5
     BRnp ODD                ; Branch to ODD if negative or positive. If zero we don't have a prime number
 
