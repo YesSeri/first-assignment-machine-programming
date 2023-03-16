@@ -1,0 +1,27 @@
+@startuml
+start
+
+:R0 <-- MSG (Input a 2 digit decimal number: )
+PUTSP
+JSR readS;
+:**readS**
+(Same as 2nd assignement);
+:JSR isPrime;
+
+rectangle "isPrime" {
+
+:save r1,r2,r3,r4,r5,r7 to memory;
+
+:R1 <-- R0 + (-2);
+
+if (R1 ?= 0) then (Yes)
+rectangle "PRIME" {
+:R0 <-- R0 && 0
+R0 <-- R0 + 1;
+}
+repeat :testing;
+repeat while (Something went wrong with long text?) is (yes) not (no)
+->aaa;
+
+	
+}

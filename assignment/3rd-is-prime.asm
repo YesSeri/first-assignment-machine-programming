@@ -40,10 +40,10 @@ ODD ADD R2, R2, x-2
     BRz PRIME
     ADD R1, R1, x2
 
-    ;; We divide R0, with R1
+    ;; We divide R0, with R1 and save quotient in R4 and remainder in R5
     JSR divide
 
-    ;; We use NOT twice to check if number is positive or zero. If zero we don't have a prime number
+    ;; We use NOT twice to check if remainder is zero. Positive means we should continue looping, negative should never happen. If zero we don't have a prime number, because number is evenly divisible.
     NOT R5, R5
     NOT R5, R5
     BRnp ODD
