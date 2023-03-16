@@ -12,16 +12,16 @@ readS                   ; The readS function begins
     AND R2, R2, x0      ; Clear R2
     ADD R3, R2, x5      ; Load the value 5 into R3
 
-    IN                  ; Read in a character
+    IN                  ; Read in a character into R0
     ADD R1, R2, R0      ; Copy the input character to R1
-    IN                  ; Read in another character
+    IN                  ; Read in another character into R0
 
     LD R2, CVT          ; Load the value -48 into R2 (used to convert ASCII digits to decimal)
     ADD R0, R0, R2      ; Subtract 48 from the first character (converts it to decimal)
 	ADD R1, R1, R2      ; Subtract 48 from the second character (converts it to decimal)
 	AND R2, R2, x0      ; Clear R2
 
-                        ;Loop to make "10" digit starts.(Loops 5 times)
+                        ; Loop to make "10" digit starts.(Loops 5 times)
 
 LOP ADD R2, R2, R1      ; Add the value in R1 to R2
     ADD R3, R3, x-1     ; Decrement R3 by 1
@@ -42,7 +42,7 @@ SAVEREG3    .BLKW 1     ; Reserve memory for SAVEREG3
 
 CVT .FILL #-48          ; Fill memory with -48 (used for converting ASCII digits to decimal)
 
-; Message to display to user: "Input a 2 digit decimal number: "
+                        ; Message to display to user: "Input a 2 digit decimal number: "
 MSG .FILL b0110111001001001
     .FILL b0111010101110000
     .FILL b0010000001110100
