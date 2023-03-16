@@ -95,7 +95,6 @@ SKIP
     RET                     ; Return from subroutine
 
                             ; MESSAGES
-MSG-INPUT           .STRINGZ "Input a 2 digit decimal number:"
 MSG-IS-PRIME        .STRINGZ "The number is prime.\n"
 MSG-IS-NOT-PRIME    .STRINGZ "The number is not prime.\n"
 
