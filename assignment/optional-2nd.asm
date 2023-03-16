@@ -239,12 +239,12 @@ checkNumber                 ; The checkNumber function begins
     	                    ; the original value was too small (n < 0), so we branch to
     	                    ; the ERROR label.
     BRn ERROR
-    LD R1, REG1SAVE         ; If we reach this point, the number is valid, so we
-    	                    ; restore the value of R1 from the stack and return.
+
+    LD R1, REG1SAVE         ; Restore register R1
     RET
+
 ERROR                       ; The ERROR function begins
     JSR errorIllegalInput   ; Call errorIllegalInput
-
 
 SAVEREG1        .BLKW 1     ; Reserve memory for SAVEREG1
 SAVEREG2        .BLKW 1     ; Reserve memory for SAVEREG2
