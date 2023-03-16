@@ -39,11 +39,6 @@ isPrime                     ; The isPrime function begins
                             ; We know R1 is x1 from AND statment few lines before.
                             ; We will loop for all odd numbers from 3 up to our number to test in R0, and see if they ever are evenly divisible.
                             ; If they are not evenly divisible we have a prime number.
-
-
-
-
-
                             ; We start at x3, so we add x2 to R1
 
     AND R2, R2, x0          ; CLear R2
@@ -193,12 +188,12 @@ LEAVE-INNER-DIGIT-LOOP      ; The FOR-INNER-DIGIT-LOOP function begins
     ADD R1, R1, x-1         ; Subtract 1 from R1
     BRp FOR-EACH-DIGIT      ; Branch to FOR-EACH-DIGIT if positive
 
-    LD R1, SAVE2REG1        ; Restore register R1.
-    LD R2, SAVE2REG2        ; Restore register R2.
-    LD R3, SAVE2REG3        ; Restore register R3.
-    LD R4, SAVE2REG4        ; Restore register R4.
-    LD R5, SAVE2REG5        ; Restore register R5.
-    LD R7, RETURNADDRESS    ; Restore register R7.
+    LD R1, SAVEREG1        ; Restore register R1.
+    LD R2, SAVEREG2        ; Restore register R2.
+    LD R3, SAVEREG3        ; Restore register R3.
+    LD R4, SAVEREG4        ; Restore register R4.
+    LD R5, SAVEREG5        ; Restore register R5.
+    LD R7, SAVEREG7        ; Restore register R7.
     RET
 
 
