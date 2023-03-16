@@ -5,7 +5,7 @@
     PUTS                    ; Output the message to the console
     JSR readS               ; Call readS function
     JSR isPrime             ; Call isPrime function
-    JSR resultS             ; Call resaultS function
+    JSR resultS             ; Call resultS function
     HALT                    ; Halt the program
 
                             ; Checks if number is prime
@@ -25,10 +25,10 @@ isPrime                     ; The isPrime function begins
 
                             ; Check if number is odd
     AND R1, R0, x1          ; Bitwise AND operation between input and "1"
-    BRz NOTPRIME            ; Branch to NOTPRIME if AND oparation is zero (input is an even number)
+    BRz NOTPRIME            ; Branch to NOTPRIME if AND operation is zero (input is an even number)
 
                             ; We have an odd number larger than 2. We now need to check if it is prime.
-                            ; We know R1 is x1 from AND statment few lines before.
+                            ; We know R1 is x1 from AND statement few lines before.
                             ; We will loop for all odd numbers from 3 up to our number to test in R0, and see if they ever are evenly divisible.
                             ; If they are not evenly divisible we have a prime number.
                             ; We start at x3, so we add x2 to R1
