@@ -11,16 +11,17 @@ readS
     ST R3, SAVEREG3
     AND R2, R2, x0
     ADD R3, R2, x5
-    IN
-    ADD R1, R2, R0
-    IN
     LD R2, CVT
+    IN
+    ADD R1, R0, R2
+    IN
     ADD R0, R0, R2
-	ADD R1, R1, R2
 	AND R2, R2, x0
-LOP ADD R2, R2, R1 ; Multiply 10 value by 5, then double to turn 2 -> 20, 3 -> 30 usw
+
+LOOP 
+    ADD R2, R2, R1 ; Multiply 10 value by 5, then double to turn 2 -> 20, 3 -> 30 usw
     ADD R3, R3, x-1
-    BRp LOP
+    BRp LOOP
     ADD R2, R2, R2
     ADD R0, R2, R0
     LD R1, SAVEREG1

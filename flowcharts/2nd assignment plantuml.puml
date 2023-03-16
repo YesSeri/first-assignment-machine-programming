@@ -1,0 +1,38 @@
+@startuml
+
+start
+
+:LEA R0 <-- M[MSG] (Input a 2 digit decimal number: )
+PUTSP
+JSR readS;
+
+rectangle "readS" {
+:save r1,r2,r3 to memory
+R2 <-- R2 & 0
+R3 <-- R2 + 5 (Used for loop later)
+R2 <-- M[CVT] (Conversion value ascii to numeric);
+:IN (Recieve input from keyboard)
+R1 <--R2 + R0 (Convert and put in R1)
+IN (Recieve input from keyboard)
+R0 <-- R0 + R2 (Convert 2nd digit)
+R1 <-- R1 + R2
+R2 <-- R2 & 0;
+repeat
+:R2 <-- R1 + R1;
+:R3 <-- R3 - 1;
+
+'   :generate diagrams;
+repeat while (R3 is positive) is (yes)
+->no;
+
+' repeat:R2 <-- R1 + x0\nR3 <-- R3 - 1;
+' repeat while (R3 ?= 0) is (No)
+' -> Yes;
+:R2 <-- R2 + R2
+R0 <-- R2 + R0
+load r1, r2, r3 from memory
+RET;
+}
+
+
+@enduml
