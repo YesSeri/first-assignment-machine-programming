@@ -126,7 +126,7 @@ SUB     ADD R4, R4, x1      ; Add 1 to R4
         LD R0, SAVEREG1     ; Restore registers R0
         LD R1, SAVEREG2     ; Restore registers R1
         LD R2, SAVEREG3     ; Restore registers R2
-        RET                 Return from subroutine
+        RET                 ; Return from subroutine
 
                             ; Recieves two digit number and saves it to R0
 
