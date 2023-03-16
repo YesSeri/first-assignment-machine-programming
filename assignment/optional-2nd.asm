@@ -31,10 +31,10 @@ isPrime                     ; The isPrime function begins
 
                             ; Check if number is odd
     AND R1, R0, x1          ; Bitwise AND operation between input and "1"
-    BRz NOTPRIME            ; Branch to NOTPRIME if AND oparation is zero (input is an even number)
+    BRz NOTPRIME            ; Branch to NOTPRIME if AND operation is zero (input is an even number)
 
                             ; We have an odd number larger than 2. We now need to check if it is prime.
-                            ; We know R1 is x1 from AND statment few lines before.
+                            ; We know R1 is x1 from AND statement few lines before.
                             ; We will loop for all odd numbers from 3 up to our number to test in R0, and see if they ever are evenly divisible.
                             ; If they are not evenly divisible we have a prime number.
                             ; We start at x3, so we add x2 to R1
@@ -128,7 +128,7 @@ SUB     ADD R4, R4, x1      ; Add 1 to R4
         LD R2, SAVEREG3     ; Restore registers R2
         RET                 ; Return from subroutine
 
-                            ; Recieve two digit number and save it to R0
+                            ; Receive two digit number and save it to R0
 
 readS                       ; The readS function begins
     ST R1, SAVEREG1         ; Store register R1
@@ -165,7 +165,7 @@ LEAVE                       ; The LEAVE function begins
     NOT R1, R1              ; Negates R1
     ADD R1, R1, x1          ; Add 1 to R1
     ADD R1, R1, x5          ; Add 5 to R1
-                            ; R1 contains number of digits we have recieved
+                            ; R1 contains number of digits we have received
     LEA R5, DIGITS          ; Load address of DIGITS into R5
     AND R0, R0, x0          ; Clear R0
 

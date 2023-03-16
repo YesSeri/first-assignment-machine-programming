@@ -128,7 +128,7 @@ SUB     ADD R4, R4, x1      ; Add 1 to R4
         LD R2, SAVEREG3     ; Restore registers R2
         RET                 ; Return from subroutine
 
-                            ; Recieves two digit number and saves it to R0
+                            ; Receives two digit number and saves it to R0
 
 readS                       ; The readS function begins
     ST R1, SAVEREG1         ; Store register R1
